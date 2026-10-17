@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="2026年12月13日(日)開催！友達とのクリスマスパーティー特設サイト。タイムスケジュールやパーティーミュージックを楽しもう！">
+  <meta name="theme-color" content="#1a0a06">
+  <title>Christmas Party 2026 🎄</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Noto+Serif+JP:wght@300;400;600&family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Snow Canvas (fixed overlay) -->
+  <canvas id="snow-canvas" aria-hidden="true"></canvas>
+
+  <!-- Sparkling Stars -->
+  <div id="sparkles" aria-hidden="true"></div>
+
+  <!-- ======================== HERO ======================== -->
+  <section id="hero">
+    <div class="hero-parallax-wrap">
+      <img src="christmas_hero.png" alt="Christmas Party 2026 ヴィンテージイラスト" class="hero-image" id="hero-img">
+    </div>
+    <div class="hero-overlay">
+      <div class="hero-content">
+        <div class="hero-ornament-row" aria-hidden="true">
+          <span class="ornament-piece">✦</span>
+          <span class="ornament-piece">❄</span>
+          <span class="ornament-piece">✦</span>
+        </div>
+        <p class="hero-eyebrow">Friends &amp; Festivities</p>
+        <h1 class="hero-title">
+          <span class="title-word">Christmas</span>
+          <span class="title-word highlight">Party</span>
+        </h1>
+        <div class="hero-year">2026</div>
+
+        <div class="hero-date-wrap">
+          <div class="hero-date-badge">
+            <span class="date-label">開催日</span>
+            <span class="date-main">12月13日</span>
+            <span class="date-weekday">日曜日</span>
+          </div>
+        </div>
+
+        <div class="hero-ornament-row bottom" aria-hidden="true">
+          <span class="ornament-piece">✦</span>
+          <span class="ornament-piece">❄</span>
+          <span class="ornament-piece">✦</span>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint" aria-label="スクロールして詳細を見る">
+      <span class="scroll-text">scroll</span>
+      <div class="scroll-arrow-wrap">
+        <div class="scroll-arrow"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== SCHEDULE ======================== -->
+  <section id="schedule">
+    <div class="section-header">
+      <div class="section-icon" aria-hidden="true">🎄</div>
+      <h2 class="section-title">タイムスケジュール</h2>
+      <p class="section-subtitle">Time Schedule</p>
+      <div class="title-underline"></div>
+    </div>
+
+    <div class="timeline" role="list">
+
+      <div class="timeline-item" data-animate role="listitem">
+        <div class="t-time" aria-label="9時">9:00</div>
+        <div class="t-spine">
+          <div class="t-dot">🎄</div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-card">
+          <div class="t-card-icon" aria-hidden="true">🎉</div>
+          <div class="t-card-body">
+            <h3 class="t-card-title">集合・受付</h3>
+            <p class="t-card-desc">会場に集合！受付を済ませてウェルカムドリンクで乾杯しよう</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-animate role="listitem">
+        <div class="t-time" aria-label="10時">10:00</div>
+        <div class="t-spine">
+          <div class="t-dot">⭐</div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-card">
+          <div class="t-card-icon" aria-hidden="true">🎮</div>
+          <div class="t-card-body">
+            <h3 class="t-card-title">イベント1：ウェルカムゲーム</h3>
+            <p class="t-card-desc">アイスブレイクゲームで場を温めよう！みんなで盛り上がれ</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-animate role="listitem">
+        <div class="t-time" aria-label="11時">11:00</div>
+        <div class="t-spine">
+          <div class="t-dot">❄️</div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-card">
+          <div class="t-card-icon" aria-hidden="true">❓</div>
+          <div class="t-card-body">
+            <h3 class="t-card-title">イベント2：クリスマスクイズ</h3>
+            <p class="t-card-desc">クリスマスにまつわるトリビアクイズ大会！チームで激突</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-animate role="listitem">
+        <div class="t-time" aria-label="12時">12:00</div>
+        <div class="t-spine">
+          <div class="t-dot">🍽️</div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-card special-card">
+          <div class="t-card-icon" aria-hidden="true">🍗</div>
+          <div class="t-card-body">
+            <h3 class="t-card-title">お昼ご飯</h3>
+            <p class="t-card-desc">みんなでワイワイ食事タイム！クリスマスメニューを満喫</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-animate role="listitem">
+        <div class="t-time" aria-label="13時">13:00</div>
+        <div class="t-spine">
+          <div class="t-dot">🎁</div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-card">
+          <div class="t-card-icon" aria-hidden="true">🎅</div>
+          <div class="t-card-body">
+            <h3 class="t-card-title">イベント3：プレゼント交換</h3>
+            <p class="t-card-desc">秘密のサンタでプレゼント交換！誰からのプレゼントかな？</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-animate role="listitem">
+        <div class="t-time" aria-label="14時">14:00</div>
+        <div class="t-spine">
+          <div class="t-dot">📸</div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-card">
+          <div class="t-card-icon" aria-hidden="true">📷</div>
+          <div class="t-card-body">
+            <h3 class="t-card-title">イベント4：フォトブース</h3>
+            <p class="t-card-desc">クリスマス小道具でポーズ決め！最高の思い出を残そう</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-animate role="listitem">
+        <div class="t-time" aria-label="15時">15:00</div>
+        <div class="t-spine">
+          <div class="t-dot">🎨</div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-card">
+          <div class="t-card-icon" aria-hidden="true">✂️</div>
+          <div class="t-card-body">
+            <h3 class="t-card-title">イベント5：クリスマスクラフト</h3>
+            <p class="t-card-desc">手作りオーナメント作り！世界に一つだけの飾りを作ろう</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-animate role="listitem">
+        <div class="t-time" aria-label="16時">16:00</div>
+        <div class="t-spine">
+          <div class="t-dot">🎊</div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-card">
+          <div class="t-card-icon" aria-hidden="true">🔢</div>
+          <div class="t-card-body">
+            <h3 class="t-card-title">イベント6：ビンゴ大会</h3>
+            <p class="t-card-desc">豪華景品をかけたビンゴ大会！B・I・N・G・O！！</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item last" data-animate role="listitem">
+        <div class="t-time" aria-label="17時">17:00</div>
+        <div class="t-spine">
+          <div class="t-dot final">🥂</div>
+        </div>
+        <div class="t-card">
+          <div class="t-card-icon" aria-hidden="true">🎆</div>
+          <div class="t-card-body">
+            <h3 class="t-card-title">イベント7：閉会・乾杯</h3>
+            <p class="t-card-desc">最高のパーティーを締めくくる最後の乾杯！また来年！</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================== MUSIC / iPOD ======================== -->
+  <section id="music">
+    <div class="section-header">
+      <div class="section-icon" aria-hidden="true">🎵</div>
+      <h2 class="section-title">パーティーミュージック</h2>
+      <p class="section-subtitle">Party Music</p>
+      <div class="title-underline"></div>
+    </div>
+
+    <div class="ipod-wrapper">
+      <!-- iPod Classic Body -->
+      <div class="ipod" id="ipod" role="application" aria-label="iPod音楽プレイヤー">
+
+        <!-- Top chrome strip -->
+        <div class="ipod-chrome-top"></div>
+
+        <!-- Apple logo -->
+        <div class="ipod-apple" aria-hidden="true">
+          <svg viewBox="0 0 14 17" fill="currentColor" width="14" height="17">
+            <path d="M13.1 8.7c0-2.5 2-3.7 2.1-3.8-1.1-1.6-2.8-1.8-3.5-1.9-1.5-.1-2.9.9-3.6.9-.7 0-1.8-.9-3-.8-1.5.1-3 .9-3.8 2.3-1.6 2.8-.4 6.9 1.2 9.2.8 1.1 1.7 2.4 2.9 2.3 1.1-.1 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.2 2.9-2.3.9-1.3 1.3-2.6 1.3-2.7 0 0-2.5-1-2.5-3.2zM10.7 2.1C11.4 1.2 11.9 0 11.7 0c-1.1 0-2.5.8-3.3 1.7-.7.8-1.3 2.1-1.2 3.3 1.3.1 2.6-.7 3.5-1.9z"/>
+          </svg>
+        </div>
+
+        <!-- Screen Bezel -->
+        <div class="ipod-screen-bezel">
+          <div class="ipod-screen" id="ipod-screen" aria-live="polite" aria-atomic="true">
+            <!-- Rendered by JS -->
+            <div class="screen-boot">
+              <div class="boot-apple">🍎</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- iPod wordmark -->
+        <div class="ipod-wordmark" aria-hidden="true">iPod</div>
+
+        <!-- Click Wheel -->
+        <div class="ipod-wheel-section">
+          <div class="ipod-wheel-outer" id="ipod-wheel" role="group" aria-label="クリックホイール">
+
+            <!-- Cardinal Buttons -->
+            <button class="wheel-btn wheel-btn-menu" id="btn-menu" aria-label="メニューに戻る">MENU</button>
+            <button class="wheel-btn wheel-btn-forward" id="btn-forward" aria-label="次の曲">
+              <span aria-hidden="true">▶▶</span>
+            </button>
+            <button class="wheel-btn wheel-btn-back" id="btn-back" aria-label="前の曲">
+              <span aria-hidden="true">◀◀</span>
+            </button>
+            <button class="wheel-btn wheel-btn-play" id="btn-play" aria-label="再生・一時停止">
+              <span aria-hidden="true">▶❚❚</span>
+            </button>
+
+            <!-- Center Select Button -->
+            <button class="wheel-center" id="btn-center" aria-label="選択"></button>
+          </div>
+        </div>
+
+        <!-- Bottom chrome -->
+        <div class="ipod-chrome-bottom">
+          <div class="ipod-headphone-jack" aria-hidden="true"></div>
+          <div class="ipod-dock-connector" aria-hidden="true">
+            <div class="dock-slot"></div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /ipod -->
+
+      <p class="ipod-hint">ホイールを回してメニュー操作</p>
+    </div>
+  </section>
+
+  <!-- ======================== FOOTER ======================== -->
+  <footer class="site-footer">
+    <div class="footer-wreath" aria-hidden="true">🎄</div>
+    <p class="footer-greeting">Merry Christmas &amp; Happy New Year</p>
+    <p class="footer-copy">Christmas Party 2026</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
