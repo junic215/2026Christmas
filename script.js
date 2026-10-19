@@ -55,8 +55,8 @@
       ctx.globalAlpha = this.opacity;
       ctx.translate(this.x, this.y);
       ctx.rotate((this.rotate * Math.PI) / 180);
-      ctx.font = `${this.size}px serif`;
-      ctx.fillStyle = '#ffffff';
+      ctx.font = `${this.size}px monospace`;
+      ctx.fillStyle = '#b3a082';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(this.shape, 0, 0);
@@ -94,18 +94,11 @@
 })();
 
 // ─────────────────────────────────────────────────────────
-// 3. HERO PARALLAX
+// 3. HERO PARALLAX (disabled — image is natural size)
 // ─────────────────────────────────────────────────────────
-(function initParallax() {
-  const wrap = document.querySelector('.hero-parallax-wrap');
-  if (!wrap) return;
+// Parallax is turned off because the hero image is displayed
+// at its natural aspect ratio (no fixed-height crop).
 
-  function onScroll() {
-    const y = window.scrollY;
-    wrap.style.transform = `translateY(${y * 0.3}px)`;
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-})();
 
 // ─────────────────────────────────────────────────────────
 // 4. TIMELINE SCROLL ANIMATIONS
@@ -138,16 +131,56 @@
 
 // ── Playlist Configuration ──────────────────────────────
 // 曲を追加する場合は、ここに追記してください。
-// { title: '曲名', artist: 'アーティスト名', file: 'ファイル名.mp3' }
+// { title: '曲名', artist: 'アーティスト名', file: 'ファイル名.mp3', art: '絵文字' }
 const PLAYLIST = [
+  {
+    title:  'Christmas Party',
+    artist: 'Christmas Party 2026',
+    file:   'ChristmasParty.mp3',
+    art:    '★',
+  },
+  {
+    title:  'Christmas Maeshow',
+    artist: 'Christmas Party 2026',
+    file:   'Christmas Maeshow.mp3',
+    art:    '★',
+  },
+  {
+    title:  'Midori',
+    artist: 'Christmas Party 2026',
+    file:   'Midori.mp3',
+    art:    '★',
+  },
   {
     title:  'miyasakosenpai',
     artist: 'みやさこ先輩',
     file:   'miyasakosenpai.mp3',
-    art:    '🎵',
+    art:    '★',
   },
-  // ← ここに追加 例:
-  // { title: 'Jingle Bells', artist: 'Unknown', file: 'jinglebells.mp3', art: '🎶' },
+  {
+    title:  'NAO',
+    artist: 'Christmas Party 2026',
+    file:   'NAO.mp3',
+    art:    '★',
+  },
+  {
+    title:  'White Shiraishi pt1',
+    artist: 'Christmas Party 2026',
+    file:   'White Shiraishi pt1.mp3',
+    art:    '★',
+  },
+  {
+    title:  'White Shiraishi pt2',
+    artist: 'Christmas Party 2026',
+    file:   'White Shiraishi pt2.mp3',
+    art:    '★',
+  },
+  {
+    title:  'Kyantama Hajime',
+    artist: 'Christmas Party 2026',
+    file:   'Kyantama Hajime.mp3',
+    art:    '★',
+  },
 ];
 
 class iPodClassic {
@@ -166,55 +199,24 @@ class iPodClassic {
     this.isPlaying      = false;
     this.volume         = 0.8;
     this.audio.volume   = this.volume;
-    this.isShuffle      = false;
-    this.isRepeat       = false;
 
     // ── Navigation State ──
-    //   screen: 'menu' | 'songs' | 'nowplaying'
-    this.screen         = 'menu';
-    this.menuStack      = []; // stack of { items, index }
+    // Only two screens: 'songs' (the main list) and 'nowplaying'
+    this.screen         = 'songs';
     this.selectedIndex  = 0;
-
-    // Build the menu tree
-    this.MENUS = {
-      main: [
-        { label: 'Music',        icon: '♪', action: () => this._pushMenu('music') },
-        { label: 'Now Playing',  icon: '▶', action: () => this._goNowPlaying() },
-        { label: 'Shuffle Songs',icon: '⇄', action: () => this._shufflePlay() },
-        { label: 'Settings',     icon: '⚙', action: () => this._pushMenu('settings') },
-      ],
-      music: [
-        { label: 'Songs',        icon: '♫', action: () => this._goSongs() },
-        { label: 'Playlists',    icon: '≡', action: () => this._pushMenu('playlists') },
-        { label: 'Shuffle',      icon: '⇄', action: () => this._shufflePlay() },
-      ],
-      settings: [
-        { label: 'Repeat',       icon: '↺', action: () => this._toggleRepeat(),
-          note: () => this.isRepeat ? 'On' : 'Off' },
-        { label: 'Shuffle',      icon: '⇄', action: () => this._toggleShuffle(),
-          note: () => this.isShuffle ? 'On' : 'Off' },
-        { label: 'Volume',       icon: '♬', action: () => {},
-          note: () => Math.round(this.volume * 100) + '%' },
-      ],
-      playlists: [
-        { label: 'All Songs',    icon: '♫', action: () => this._goSongs() },
-      ],
-    };
-
-    this.currentMenu = this.MENUS.main;
 
     // ── Click Wheel State ──
     this._wheelStart     = null;
     this._wheelAccum     = 0;
-    this._SCROLL_DEG     = 26;   // degrees per scroll step
+    this._SCROLL_DEG     = 24;   // degrees per scroll step
     this._isMouseDown    = false;
 
     this._setupAudio();
     this._setupButtons();
     this._setupWheel();
 
-    // Boot animation then show menu
-    setTimeout(() => this._renderScreen(), 900);
+    // Boot animation then show songs list
+    setTimeout(() => this._renderScreen(), 800);
   }
 
   // ── Audio Setup ─────────────────────────────────────────
@@ -223,12 +225,7 @@ class iPodClassic {
       if (this.screen === 'nowplaying') this._renderScreen();
     });
     this.audio.addEventListener('ended', () => {
-      if (this.isRepeat) {
-        this.audio.currentTime = 0;
-        this.audio.play();
-      } else {
-        this._nextTrack();
-      }
+      this._nextTrack();
     });
     this.audio.addEventListener('loadedmetadata', () => {
       if (this.screen === 'nowplaying') this._renderScreen();
@@ -265,12 +262,7 @@ class iPodClassic {
   }
 
   _nextTrack() {
-    let next;
-    if (this.isShuffle) {
-      next = Math.floor(Math.random() * this.playlist.length);
-    } else {
-      next = (this.currentTrack + 1) % this.playlist.length;
-    }
+    const next = (this.currentTrack + 1) % this.playlist.length;
     this._loadTrack(next, this.isPlaying);
     this._renderScreen();
   }
@@ -286,44 +278,17 @@ class iPodClassic {
     this._renderScreen();
   }
 
-  _shufflePlay() {
-    this.isShuffle = true;
-    const i = Math.floor(Math.random() * this.playlist.length);
-    this._loadTrack(i, true);
-    this._goNowPlaying();
-  }
-
-  _toggleRepeat() {
-    this.isRepeat = !this.isRepeat;
-    this._renderScreen();
-  }
-
-  _toggleShuffle() {
-    this.isShuffle = !this.isShuffle;
-    this._renderScreen();
-  }
-
   // ── Navigation ──────────────────────────────────────────
-  _pushMenu(name) {
-    this.menuStack.push({ items: this.currentMenu, index: this.selectedIndex });
-    this.currentMenu   = this.MENUS[name];
-    this.selectedIndex = 0;
-    this.screen        = 'menu';
-    this._renderScreen();
-  }
-
   _popMenu() {
-    if (this.screen !== 'menu') {
-      this.screen = 'menu';
-      this._renderScreen();
-      return;
+    // In Songs list, MENU goes to Now Playing if playing; in Now Playing, MENU goes back to Songs
+    if (this.screen === 'nowplaying') {
+      this.screen = 'songs';
+      this.selectedIndex = this.currentTrack;
+    } else {
+      // Toggle to Now Playing
+      this.screen = 'nowplaying';
     }
-    if (this.menuStack.length > 0) {
-      const prev         = this.menuStack.pop();
-      this.currentMenu   = prev.items;
-      this.selectedIndex = prev.index;
-      this._renderScreen();
-    }
+    this._renderScreen();
   }
 
   _goNowPlaying() {
@@ -331,17 +296,8 @@ class iPodClassic {
     this._renderScreen();
   }
 
-  _goSongs() {
-    this.selectedIndex = this.currentTrack;
-    this.screen        = 'songs';
-    this._renderScreen();
-  }
-
   _selectCurrent() {
-    if (this.screen === 'menu') {
-      const item = this.currentMenu[this.selectedIndex];
-      if (item) item.action();
-    } else if (this.screen === 'songs') {
+    if (this.screen === 'songs') {
       this._loadTrack(this.selectedIndex, true);
       this._goNowPlaying();
     } else if (this.screen === 'nowplaying') {
@@ -350,11 +306,7 @@ class iPodClassic {
   }
 
   _scrollList(dir) {
-    if (this.screen === 'menu') {
-      const len          = this.currentMenu.length;
-      this.selectedIndex = (this.selectedIndex + dir + len) % len;
-      this._renderScreen();
-    } else if (this.screen === 'songs') {
+    if (this.screen === 'songs') {
       const len          = this.playlist.length;
       this.selectedIndex = (this.selectedIndex + dir + len) % len;
       this._renderScreen();
@@ -486,44 +438,11 @@ class iPodClassic {
   // ── Screen Rendering ────────────────────────────────────
   _renderScreen() {
     const el = this.screenEl;
-
-    if (this.screen === 'menu') {
-      this._renderMenu(el);
-    } else if (this.screen === 'songs') {
+    if (this.screen === 'songs') {
       this._renderSongs(el);
     } else if (this.screen === 'nowplaying') {
       this._renderNowPlaying(el);
     }
-  }
-
-  _renderMenu(el) {
-    const items   = this.currentMenu;
-    const title   = this._menuTitle();
-    const battery = '🔋';
-    const time    = new Date().toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
-
-    // Determine scroll window (show max 5 items at a time)
-    const VISIBLE = 5;
-    const start   = Math.max(0, Math.min(this.selectedIndex - 2, items.length - VISIBLE));
-    const visible = items.slice(start, start + VISIBLE);
-    const visIdx  = this.selectedIndex - start;
-
-    el.innerHTML = `
-      <div class="screen-header">
-        <span class="screen-title">${title}</span>
-        <span class="screen-icons">${time} ${battery}</span>
-      </div>
-      <div class="screen-menu">
-        ${visible.map((item, i) => {
-          const note = item.note ? item.note() : '';
-          return `<div class="menu-item ${i === visIdx ? 'selected' : ''}">
-            <span class="menu-label">${item.icon} ${item.label}</span>
-            ${note ? `<span class="menu-note">${note}</span>` : ''}
-            <span class="menu-arrow">›</span>
-          </div>`;
-        }).join('')}
-      </div>
-    `;
   }
 
   _renderSongs(el) {
@@ -554,37 +473,31 @@ class iPodClassic {
     const track    = this.playlist[this.currentTrack];
     const cur      = this.audio.currentTime;
     const dur      = this.audio.duration;
-    const progress = dur && !isNaN(dur) ? (cur / dur) : 0;
+    const progress = dur && !isNaN(dur) ? Math.min(1, cur / dur) : 0;
     const pct      = (progress * 100).toFixed(2);
-    const tpct     = (progress * 100).toFixed(2);
     const volPct   = (this.volume * 100).toFixed(0);
     const playIcon = this.isPlaying ? '▶' : '❚❚';
-    const shuffIco = this.isShuffle ? ' ⇄' : '';
-    const repIco   = this.isRepeat  ? ' ↺' : '';
-
-    const titleLen = track.title.length;
-    const scrollClass = titleLen > 14 ? 'scrolling' : '';
 
     el.innerHTML = `
       <div class="now-playing-screen">
         <div class="np-header">
-          <span>${this.currentTrack + 1} of ${this.playlist.length}${shuffIco}${repIco}</span>
+          <span>${this.currentTrack + 1} of ${this.playlist.length}</span>
           <span>Now Playing 🔋</span>
         </div>
         <div class="np-body">
           <div class="album-art-box">${track.art || '🎵'}</div>
           <div class="np-track-info">
-            <div class="np-title ${scrollClass}">${track.title}</div>
+            <div class="np-title">${track.title}</div>
             <div class="np-artist">${track.artist}</div>
           </div>
           <div class="np-progress">
             <div class="np-time-row">
               <span>${this._fmtTime(cur)}</span>
-              <span>${this._fmtTime(dur)}</span>
+              <span>-${this._fmtTime(dur ? dur - cur : 0)}</span>
             </div>
             <div class="progress-track">
               <div class="progress-fill" style="width:${pct}%"></div>
-              <div class="progress-thumb" style="left:${tpct}%"></div>
+              <div class="progress-thumb" style="left:${pct}%"></div>
             </div>
           </div>
           <div class="np-status-row">
@@ -604,11 +517,37 @@ class iPodClassic {
 }
 
 // ─────────────────────────────────────────────────────────
-// 6. INITIALISE
+// 6. COUNTDOWN TIMER
+// ─────────────────────────────────────────────────────────
+function updateCountdown() {
+  const cdElement = document.getElementById('countdown-days');
+  if (!cdElement) return;
+
+  // Target event: 2026-12-13 09:00:00 (JST)
+  const targetDate = new Date(2026, 11, 13, 9, 0, 0); // Month is 0-indexed (11 = Dec)
+  const now = new Date();
+  const diffMs = targetDate - now;
+
+  if (diffMs <= 0) {
+    const box = document.getElementById('countdown-box');
+    if (box) box.innerHTML = '<span class="cd-label" style="font-size:14px;color:var(--retro-red);font-weight:bold;">★ 本日開催中！ ★</span>';
+    return;
+  }
+
+  const days = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+  cdElement.textContent = days;
+}
+
+// ─────────────────────────────────────────────────────────
+// 7. INITIALISE
 // ─────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
   // Launch iPod
   new iPodClassic();
+
+  // Run Countdown
+  updateCountdown();
+  setInterval(updateCountdown, 60000); // update every minute
 
   // Scroll hint click
   const hint = document.querySelector('.scroll-hint');
