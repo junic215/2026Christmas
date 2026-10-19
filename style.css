@@ -891,6 +891,16 @@ section {
   background: #000;
 }
 
+.video-responsive iframe {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: 0 !important;
+  display: block;
+}
+
 .video-link-wrap {
   margin-top: 8px;
   text-align: right;
